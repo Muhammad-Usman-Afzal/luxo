@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SpaRoot>..\</SpaRoot>
+    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+    <SpaProxyServerUrl>http://localhost:5173</SpaProxyServerUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+  </ItemGroup>
+
+  <!-- ============================================================
+       TARGET: Auto npm install on first build / when packages change
+       ============================================================ -->
+  <Target Name="NpmInstall" BeforeTargets="Build" Condition="!Exists('..\node_modules\.package-lock.json') Or '$(Configuration)' == 'Debug'">
+    <Message Importance="high" Text="📦 Installing npm packages..." />
+    <Exec Command="npm install" WorkingDirectory=".." ContinueOnError="true" />
+    <Exec Command="npm install" WorkingDirectory=".." Condition="!Exists('..\node_modules\react')" />
+  </Target>
+
+  <!-- ============================================================
+       TARGET: Ensure Vite dev server is running (dev only)
+       ============================================================ -->
+  <Target Name="EnsureViteRunning" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+    <Message Importance="high" Text="🚀 Starting Vite dev server on port 5173..." />
+  </Target>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* ── Enable class-based dark mode for Tailwind v4 ── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Smooth transitions between themes ── */
+html {
+  transition: color 0.3s ease, background-color 0.3s ease;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* ── Scrollbar dark styling ── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+
+/* ── Safe area for mobile bottom nav ── */
+.safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+/* ── Hide scrollbar for brand strip ── */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ── Premium animations ── */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease both;
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scale-in 0.3s ease both;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(99,102,241,0.15); }
+  50% { box-shadow: 0 0 20px rgba(99,102,241,0.3); }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ── Staggered entry for lists ── */
+.stagger-enter > * {
+  animation: fade-in-up 0.5s ease both;
+}
+.stagger-enter > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-enter > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-enter > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-enter > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-enter > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-enter > *:nth-child(6) { animation-delay: 400ms; }
+.stagger-enter > *:nth-child(7) { animation-delay: 480ms; }
+.stagger-enter > *:nth-child(8) { animation-delay: 560ms; }
